@@ -63,7 +63,7 @@
       width: 60px;
       height: 80px;
       border-radius: 50%;
-      animation: floatUp 8s linear infinite;
+      animation: floatUp linear infinite;
       z-index: 5;
     }
 
@@ -80,7 +80,7 @@
       background: white;
       border-radius: 50%;
       animation: twinkle 3s infinite alternate;
-      z-index: 0; /* stay in background */
+      z-index: 0;
     }
 
     @keyframes twinkle {
@@ -134,7 +134,7 @@
       font-size: 1.4rem;
       color: #fff;
       font-family: 'Dancing Script', cursive;
-      z-index: 1; /* below canvas cover */
+      z-index: 1;
     }
 
     #openText {
@@ -152,54 +152,51 @@
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 2; /* cover hides hiddenMsg */
+      z-index: 2;
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
   <h1>🎂 Happy Birthday, Akshita 🎂</h1>
-  <p class="typewriter">I hope your day goes great and is filled with ,gifts so many that u dont know where to keep them xd,love,happiness, and everything you deserve cuz u deserve the best!! 💖</p>
+  <p class="typewriter">I hope your day goes great and is filled with gifts, love, happiness, and everything you deserve cuz u deserve the besttt!! 💖</p>
 
   <button onclick="revealNote()">🔐 Open Your Surprise 🔐</button>
   <button onclick="playSong()">🎶 Play Song 🎶</button>
 
-  <div id="secretNote">I miss you a lot and i am so sorry for ym mistakes again, I am trying to be better every day and will continue.(I hope i pass ur test xd and yeah i am doing better, i hope u r doing great) 💕</div>
+  <div id="secretNote">I miss you a lot and I am so sorry for my mistakes. I am trying to be better every day i promise ;-;</div>
 
-  <!-- Scratch Card -->
   <div id="scratchCard">
-    <div id="hiddenMsg">💌 You are always gonna be my fav person, sorry if i dont have the right to say that ;-; 💌</div>
+    <div id="hiddenMsg">💌 You are always gonna be my fav person sorry if i dont have the right to say that 💌</div>
     <div id="openText">✨ Scratch Me ✨</div>
     <canvas></canvas>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    // Balloons
+    // ---------- Stars ----------
+    const starCount = 80;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+    }
+
+    // ---------- Balloons ----------
     function createBalloon() {
       const balloon = document.createElement("div");
-      balloon.classList.add("balloon");
+      balloon.className = "balloon";
       balloon.style.left = Math.random() * window.innerWidth + "px";
       balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
-      balloon.style.animationDuration = (6 + Math.random() * 4) + "s";
+      balloon.style.animationDuration = (6 + Math.random()*4) + "s";
       document.body.appendChild(balloon);
-      setTimeout(() => balloon.remove(), 10000);
+      setTimeout(() => balloon.remove(), 12000);
     }
-    setInterval(createBalloon, 800);
+    setInterval(createBalloon, 700);
 
-    // Stars
-    function createStars() {
-      for (let i = 0; i < 80; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        star.style.top = Math.random() * window.innerHeight + "px";
-        star.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(star);
-      }
-    }
-    createStars();
-
-    // Secret Note + Confetti
+    // ---------- Secret Note + Confetti ----------
     function revealNote() {
       document.getElementById("secretNote").style.display = "block";
       launchConfetti();
@@ -209,27 +206,25 @@
       const animationEnd = Date.now() + duration;
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
       function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-      const interval = setInterval(function() {
+      const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);
         const particleCount = 50 * (timeLeft / duration);
         confetti(Object.assign({}, defaults, { 
-          particleCount, 
-          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+          particleCount,
+          origin: { x: randomInRange(0.1,0.9), y: Math.random() - 0.2 }
         }));
       }, 250);
     }
 
-    // Song
-    let audio;
-function playSong() {
-  if (!audio) {
-    audio = new Audio("https://www.dropbox.com/scl/fi/sj5mgh3orewaxgj35horb/One-Direction-Night-Changes.mp3?rlkey=bhdy84exjfb72zidip32b6ck7&st=39sbw6bv&dl=1");
-  }
-  audio.play();
-}
+    // ---------- Audio ----------
+    const audio = new Audio("https://www.dropbox.com/scl/fi/sj5mgh3orewaxgj35horb/One-Direction-Night-Changes.mp3?rlkey=bhdy84exjfb72zidip32b6ck7&dl=1");
+    audio.preload = "auto";
+    function playSong() {
+      audio.play().catch(() => alert("Click the button again to start the song."));
+    }
 
-    // Scratch Card
+    // ---------- Scratch Card ----------
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = 280;
@@ -238,8 +233,8 @@ function playSong() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let isDrawing = false;
-    canvas.addEventListener("mousedown", () => { isDrawing = true; });
-    canvas.addEventListener("mouseup", () => { isDrawing = false; });
+    canvas.addEventListener("mousedown", () => isDrawing = true);
+    canvas.addEventListener("mouseup", () => isDrawing = false);
     canvas.addEventListener("mousemove", scratch);
 
     function scratch(e) {
@@ -249,14 +244,10 @@ function playSong() {
       const y = e.clientY - rect.top;
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
+      ctx.arc(x, y, 20, 0, Math.PI*2);
       ctx.fill();
       document.getElementById("openText").style.display = "none";
     }
   </script>
 </body>
 </html>
-
-
-
-
