@@ -1,1 +1,293 @@
-we
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+      background-size: 600% 600%;
+      animation: gradientShift 20s ease infinite;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    
+    .graffiti-text {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      line-height: 1.2;
+      margin: 0 0 15px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow:
+        0 0 5px #ff0057,
+        0 0 15px #00f7ff,
+        0 0 25px #ff0057;
+      animation: graffitiGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes graffitiGlow {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    
+    .smooth-text {
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      color: #ffecec;
+      margin: 10px 0 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 2s ease-out forwards;
+      max-width: 90%;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    button {
+      margin: 10px 5px;
+      padding: 12px 20px;
+      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+      border: none;
+      border-radius: 25px;
+      background: #ff6b81;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+      background: #ff4757;
+    }
+
+    
+    #secretNote {
+      margin-top: 15px;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      color: #fff;
+      display: none;
+      max-width: 90%;
+      line-height: 1.5;
+    }
+
+    
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 45px;
+      height: 65px;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      z-index: 5;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    
+    #scratchCard {
+      margin: 25px auto 0;
+      position: relative;
+      width: min(90%, 300px);
+      height: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f1e);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      z-index: 5;
+    }
+
+    #hiddenMsg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
+      color: #fff;
+      font-family: 'Dancing Script', cursive;
+      z-index: 1;
+      text-align: center;
+    }
+
+    #openText {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
+      color: #ffdde1;
+      font-family: 'Dancing Script', cursive;
+      z-index: 3;
+      text-align: center;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 2;
+    }
+
+    /* Mobile specific tweaks */
+    @media (max-width: 500px) {
+      .graffiti-text { letter-spacing: 1px; }
+      .smooth-text { margin: 5px 0 15px; }
+      button { width: 80%; max-width: 250px; }
+      #scratchCard { height: 100px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
+  <p class="smooth-text">I hope your day goes well filled with LOTS of gifts,love,happiness, and the best u deserve :)💖</p>
+
+  <button onclick="revealNote()">🔐 Open Your Surprise 🔐</button>
+  <button onclick="playSong()">🎶 Play Song 🎶</button>
+
+  <div id="secretNote">I miss you a lot, and I’m so sorry for my mistakes. I promise I’m trying to be better every day 💕</div>
+
+  <div id="scratchCard">
+    <div id="hiddenMsg">💌 You’ll always be my favourite person 💌</div>
+    <div id="openText">✨ Scratch Me ✨</div>
+    <canvas></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    
+    const starCount = 60;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+    }
+
+    
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * window.innerWidth + "px";
+      balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+      balloon.style.animationDuration = (7 + Math.random()*3) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 12000);
+    }
+    setInterval(createBalloon, 1000);
+
+    
+    function revealNote() {
+      document.getElementById("secretNote").style.display = "block";
+      launchConfetti();
+    }
+    function launchConfetti() {
+      const duration = 2.5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 25, spread: 360, ticks: 60, zIndex: 1000 };
+      function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+        const particleCount = 30 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { 
+          particleCount,
+          origin: { x: randomInRange(0.2,0.8), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+
+    // ---------- Audio ----------
+    const audio = new Audio("https://www.dropbox.com/scl/fi/sj5mgh3orewaxgj35horb/One-Direction-Night-Changes.mp3?rlkey=bhdy84exjfb72zidip32b6ck7&dl=1");
+    audio.preload = "auto";
+    function playSong() {
+      audio.play().catch(() => alert("Tap again to start the song 🎶"));
+    }
+
+    // ---------- Scratch Card ----------
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = document.getElementById("scratchCard").offsetWidth;
+    canvas.height = document.getElementById("scratchCard").offsetHeight;
+    ctx.fillStyle = "#999";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let isDrawing = false;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (e.touches) {
+        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+      } else {
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+    }
+
+    function scratch(e) {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 18, 0, Math.PI*2);
+      ctx.fill();
+      document.getElementById("openText").style.display = "none";
+    }
+
+    canvas.addEventListener("mousedown", () => isDrawing = true);
+    canvas.addEventListener("mouseup", () => isDrawing = false);
+    canvas.addEventListener("mousemove", scratch);
+
+    canvas.addEventListener("touchstart", (e) => { isDrawing = true; scratch(e); });
+    canvas.addEventListener("touchend", () => isDrawing = false);
+    canvas.addEventListener("touchmove", (e) => { scratch(e); e.preventDefault(); }, { passive: false });
+  </script>
+</body>
+</html>
+
+
+
+
