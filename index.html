@@ -5,6 +5,7 @@
   <title>Happy Birthday 🎂</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* ---------- Base Styles ---------- */
     body {
       margin: 0;
       height: 100vh;
@@ -29,12 +30,10 @@
       100% { background-position: 0% 50%; }
     }
 
-    
+    /* ---------- Title & Text ---------- */
     .graffiti-text {
       font-size: clamp(1.8rem, 6vw, 3.5rem);
-      line-height: 1.2;
       margin: 0 0 15px;
-      color: #fff;
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow:
@@ -50,7 +49,6 @@
       100% { transform: scale(1); }
     }
 
-    
     .smooth-text {
       font-size: clamp(1rem, 4vw, 1.4rem);
       color: #ffecec;
@@ -66,6 +64,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ---------- Buttons ---------- */
     button {
       margin: 10px 5px;
       padding: 12px 20px;
@@ -84,17 +83,16 @@
       background: #ff4757;
     }
 
-    
+    /* ---------- Secret Note ---------- */
     #secretNote {
       margin-top: 15px;
       font-size: clamp(1rem, 3.5vw, 1.2rem);
-      color: #fff;
       display: none;
       max-width: 90%;
       line-height: 1.5;
     }
 
-    
+    /* ---------- Balloons ---------- */
     .balloon {
       position: absolute;
       bottom: -150px;
@@ -110,7 +108,7 @@
       100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
     }
 
-    
+    /* ---------- Stars ---------- */
     .star {
       position: absolute;
       width: 2px;
@@ -126,7 +124,7 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
 
-    
+    /* ---------- Scratch Card ---------- */
     #scratchCard {
       margin: 25px auto 0;
       position: relative;
@@ -148,7 +146,6 @@
       justify-content: center;
       padding: 10px;
       font-size: clamp(1rem, 3.5vw, 1.2rem);
-      color: #fff;
       font-family: 'Dancing Script', cursive;
       z-index: 1;
       text-align: center;
@@ -171,7 +168,7 @@
       z-index: 2;
     }
 
-    /* Mobile specific tweaks */
+    /* ---------- Mobile Tweaks ---------- */
     @media (max-width: 500px) {
       .graffiti-text { letter-spacing: 1px; }
       .smooth-text { margin: 5px 0 15px; }
@@ -183,7 +180,7 @@
 </head>
 <body>
   <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
-  <p class="smooth-text">I hope your day goes well filled with LOTS of gifts,love,happiness, and the best u deserve :)💖</p>
+  <p class="smooth-text">I hope your day goes well filled with LOTS of gifts, love, happiness, and the best you deserve :) 💖</p>
 
   <button onclick="revealNote()">🔐 Open Your Surprise 🔐</button>
   <button onclick="playSong()">🎶 Play Song 🎶</button>
@@ -198,17 +195,19 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    
-    const starCount = 60;
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement("div");
-      star.className = "star";
-      star.style.top = Math.random() * window.innerHeight + "px";
-      star.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(star);
-    }
+    // ---------- Stars ----------
+    (() => {
+      const starCount = 60;
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(star);
+      }
+    })();
 
-    
+    // ---------- Balloons ----------
     function createBalloon() {
       const balloon = document.createElement("div");
       balloon.className = "balloon";
@@ -220,24 +219,27 @@
     }
     setInterval(createBalloon, 1000);
 
-    
+    // ---------- Secret Note + Confetti ----------
     function revealNote() {
-      document.getElementById("secretNote").style.display = "block";
+      const note = document.getElementById("secretNote");
+      note.style.display = "block";
       launchConfetti();
     }
+
     function launchConfetti() {
-      const duration = 2.5 * 1000;
-      const animationEnd = Date.now() + duration;
+      const duration = 2500;
+      const end = Date.now() + duration;
       const defaults = { startVelocity: 25, spread: 360, ticks: 60, zIndex: 1000 };
-      function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
       const interval = setInterval(() => {
-        const timeLeft = animationEnd - Date.now();
+        const timeLeft = end - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);
-        const particleCount = 30 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { 
-          particleCount,
-          origin: { x: randomInRange(0.2,0.8), y: Math.random() - 0.2 }
-        }));
+
+        confetti({
+          ...defaults,
+          particleCount: 30 * (timeLeft / duration),
+          origin: { x: Math.random(), y: Math.random() - 0.2 }
+        });
       }, 250);
     }
 
@@ -251,8 +253,10 @@
     // ---------- Scratch Card ----------
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = document.getElementById("scratchCard").offsetWidth;
-    canvas.height = document.getElementById("scratchCard").offsetHeight;
+    const scratchCard = document.getElementById("scratchCard");
+
+    canvas.width = scratchCard.offsetWidth;
+    canvas.height = scratchCard.offsetHeight;
     ctx.fillStyle = "#999";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -260,11 +264,8 @@
 
     function getPos(e) {
       const rect = canvas.getBoundingClientRect();
-      if (e.touches) {
-        return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
-      } else {
-        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-      }
+      const point = e.touches ? e.touches[0] : e;
+      return { x: point.clientX - rect.left, y: point.clientY - rect.top };
     }
 
     function scratch(e) {
@@ -277,17 +278,10 @@
       document.getElementById("openText").style.display = "none";
     }
 
-    canvas.addEventListener("mousedown", () => isDrawing = true);
-    canvas.addEventListener("mouseup", () => isDrawing = false);
+    ["mousedown", "touchstart"].forEach(evt => canvas.addEventListener(evt, e => { isDrawing = true; scratch(e); }));
+    ["mouseup", "touchend"].forEach(evt => canvas.addEventListener(evt, () => isDrawing = false));
     canvas.addEventListener("mousemove", scratch);
-
-    canvas.addEventListener("touchstart", (e) => { isDrawing = true; scratch(e); });
-    canvas.addEventListener("touchend", () => isDrawing = false);
-    canvas.addEventListener("touchmove", (e) => { scratch(e); e.preventDefault(); }, { passive: false });
+    canvas.addEventListener("touchmove", e => { scratch(e); e.preventDefault(); }, { passive: false });
   </script>
 </body>
 </html>
-
-
-
-
