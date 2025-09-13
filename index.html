@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Happy Birthday 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* Background Gradient Animation */
     body {
@@ -12,13 +13,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow-x: hidden;
       font-family: 'Poppins', sans-serif;
       text-align: center;
       color: #fff;
       background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
       background-size: 600% 600%;
       animation: gradientShift 20s ease infinite;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     @keyframes gradientShift {
@@ -29,51 +32,34 @@
 
     /* Graffiti Effect */
     .graffiti-text {
-      font-size: clamp(2rem, 6vw, 4rem);
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      line-height: 1.2;
+      margin: 0 0 15px;
       color: #fff;
-      text-align: center;
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-shadow:
         0 0 5px #ff0057,
-        0 0 10px #ff0057,
-        0 0 20px #00f7ff,
-        0 0 40px #ff0057;
+        0 0 15px #00f7ff,
+        0 0 25px #ff0057;
       animation: graffitiGlow 4s ease-in-out infinite alternate;
     }
 
     @keyframes graffitiGlow {
-      0% {
-        text-shadow:
-          0 0 5px #ff0057,
-          0 0 15px #00f7ff,
-          0 0 25px #ff0057;
-        transform: scale(1);
-      }
-      50% {
-        text-shadow:
-          0 0 15px #ff0057,
-          0 0 30px #00f7ff,
-          0 0 45px #ff0057;
-        transform: scale(1.05);
-      }
-      100% {
-        text-shadow:
-          0 0 5px #ff0057,
-          0 0 20px #00f7ff,
-          0 0 30px #ff0057;
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     /* Smooth Fade-in Text */
     .smooth-text {
-      font-size: clamp(1rem, 4vw, 1.5rem);
-      color: #ffdde1;
-      margin-top: 15px;
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      color: #ffecec;
+      margin: 10px 0 20px;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 2s ease-out forwards;
+      max-width: 90%;
     }
 
     @keyframes fadeInUp {
@@ -82,37 +68,39 @@
     }
 
     button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 1.2rem;
+      margin: 10px 5px;
+      padding: 12px 20px;
+      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       border: none;
       border-radius: 25px;
       background: #ff6b81;
       color: white;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.3s ease;
       z-index: 10;
     }
 
     button:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       background: #ff4757;
     }
 
     /* Secret note */
     #secretNote {
-      margin-top: 20px;
-      font-size: 1.4rem;
+      margin-top: 15px;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
       color: #fff;
       display: none;
+      max-width: 90%;
+      line-height: 1.5;
     }
 
     /* Balloons */
     .balloon {
       position: absolute;
       bottom: -150px;
-      width: 60px;
-      height: 80px;
+      width: 45px;
+      height: 65px;
       border-radius: 50%;
       animation: floatUp linear infinite;
       z-index: 5;
@@ -141,9 +129,9 @@
 
     /* Scratch Card */
     #scratchCard {
-      margin-top: 40px;
+      margin: 25px auto 0;
       position: relative;
-      width: 280px;
+      width: min(90%, 300px);
       height: 120px;
       border-radius: 12px;
       overflow: hidden;
@@ -154,50 +142,57 @@
 
     #hiddenMsg {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      padding: 10px;
+      font-size: clamp(1rem, 3.5vw, 1.2rem);
       color: #fff;
       font-family: 'Dancing Script', cursive;
       z-index: 1;
+      text-align: center;
     }
 
     #openText {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 3.5vw, 1.1rem);
       color: #ffdde1;
       font-family: 'Dancing Script', cursive;
       z-index: 3;
+      text-align: center;
     }
 
     canvas {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       z-index: 2;
+    }
+
+    /* Mobile specific tweaks */
+    @media (max-width: 500px) {
+      .graffiti-text { letter-spacing: 1px; }
+      .smooth-text { margin: 5px 0 15px; }
+      button { width: 80%; max-width: 250px; }
+      #scratchCard { height: 100px; }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
   <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
-  <p class="smooth-text">I hope your day goes great and is filled with gifts, love, happiness, and everything you deserve cuz u deserve the besttt!! 💖</p>
+  <p class="smooth-text">I hope your day goes amazing, filled with love, smiles, and all the little joys you truly deserve 💖</p>
 
   <button onclick="revealNote()">🔐 Open Your Surprise 🔐</button>
   <button onclick="playSong()">🎶 Play Song 🎶</button>
 
-  <div id="secretNote">I miss you a lot and I am so sorry for my mistakes. I am trying to be better every day i promise ;-;</div>
+  <div id="secretNote">I miss you a lot, and I’m so sorry for my mistakes. I promise I’m trying to be better every day 💕</div>
 
   <div id="scratchCard">
-    <div id="hiddenMsg">💌 You are always gonna be my fav person sorry if i dont have the right to say that 💌</div>
+    <div id="hiddenMsg">💌 You’ll always be my favourite person 💌</div>
     <div id="openText">✨ Scratch Me ✨</div>
     <canvas></canvas>
   </div>
@@ -205,7 +200,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
     // ---------- Stars ----------
-    const starCount = 80;
+    const starCount = 60;
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement("div");
       star.className = "star";
@@ -220,11 +215,11 @@
       balloon.className = "balloon";
       balloon.style.left = Math.random() * window.innerWidth + "px";
       balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
-      balloon.style.animationDuration = (6 + Math.random()*4) + "s";
+      balloon.style.animationDuration = (7 + Math.random()*3) + "s";
       document.body.appendChild(balloon);
       setTimeout(() => balloon.remove(), 12000);
     }
-    setInterval(createBalloon, 700);
+    setInterval(createBalloon, 1000);
 
     // ---------- Secret Note + Confetti ----------
     function revealNote() {
@@ -232,17 +227,17 @@
       launchConfetti();
     }
     function launchConfetti() {
-      const duration = 3 * 1000;
+      const duration = 2.5 * 1000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+      const defaults = { startVelocity: 25, spread: 360, ticks: 60, zIndex: 1000 };
       function randomInRange(min, max) { return Math.random() * (max - min) + min; }
       const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);
-        const particleCount = 50 * (timeLeft / duration);
+        const particleCount = 30 * (timeLeft / duration);
         confetti(Object.assign({}, defaults, { 
           particleCount,
-          origin: { x: randomInRange(0.1,0.9), y: Math.random() - 0.2 }
+          origin: { x: randomInRange(0.2,0.8), y: Math.random() - 0.2 }
         }));
       }, 250);
     }
@@ -251,15 +246,15 @@
     const audio = new Audio("https://www.dropbox.com/scl/fi/sj5mgh3orewaxgj35horb/One-Direction-Night-Changes.mp3?rlkey=bhdy84exjfb72zidip32b6ck7&dl=1");
     audio.preload = "auto";
     function playSong() {
-      audio.play().catch(() => alert("Click the button again to start the song."));
+      audio.play().catch(() => alert("Tap again to start the song 🎶"));
     }
 
     // ---------- Scratch Card ----------
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = 280;
-    canvas.height = 120;
-    ctx.fillStyle = "#888";
+    canvas.width = document.getElementById("scratchCard").offsetWidth;
+    canvas.height = document.getElementById("scratchCard").offsetHeight;
+    ctx.fillStyle = "#999";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let isDrawing = false;
@@ -278,7 +273,7 @@
       const pos = getPos(e);
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(pos.x, pos.y, 20, 0, Math.PI*2);
+      ctx.arc(pos.x, pos.y, 18, 0, Math.PI*2);
       ctx.fill();
       document.getElementById("openText").style.display = "none";
     }
