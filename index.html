@@ -83,6 +83,26 @@
       background: #ff4757;
     }
 
+    /* Circular Image Button */
+    .circle-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle, #ff6b81, #ff4757);
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      margin-top: 15px;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .circle-btn:hover {
+      transform: scale(1.1);
+    }
+
     /* ---------- Secret Note ---------- */
     #secretNote {
       margin-top: 15px;
@@ -122,6 +142,69 @@
     @keyframes twinkle {
       0%, 100% { opacity: 0.2; transform: scale(0.8); }
       50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ---------- Shooting Stars ---------- */
+    .shooting-star {
+      position: absolute;
+      top: 0;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, white, transparent);
+      opacity: 0.8;
+      transform: rotate(25deg);
+      animation: shoot 1.2s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(0) translateY(0) rotate(25deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-500px) translateY(500px) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    /* ---------- Popup ---------- */
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      max-width: 90%;
+      max-height: 80%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .popup-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
     }
 
     /* ---------- Scratch Card ---------- */
@@ -182,8 +265,9 @@
   <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
   <p class="smooth-text">I hope your day goes well filled with LOTS of gifts, love, happiness, and the best you deserve :) 💖</p>
 
-  <button onclick="revealNote()"> Open message? </button>
+  <button onclick="revealNote()">Open Message?</button>
   <button onclick="playSong()">🎶 Play Song 🎶</button>
+  <button class="circle-btn" onclick="openPopup()">🌸</button>
 
   <div id="secretNote">I miss you a lot, and I’m so sorry for my mistakes. I promise I’m trying to be better every day 💕</div>
 
@@ -191,6 +275,14 @@
     <div id="hiddenMsg">💌 You’ll always be my favourite person 💌</div>
     <div id="openText">✨ Scratch Me ✨</div>
     <canvas></canvas>
+  </div>
+
+  <!-- Popup Image -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <img src="https://placekitten.com/400/300" alt="Surprise Image">
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -218,6 +310,17 @@
       setTimeout(() => balloon.remove(), 12000);
     }
     setInterval(createBalloon, 1000);
+
+    // ---------- Shooting Stars ----------
+    function createShootingStar() {
+      const star = document.createElement("div");
+      star.className = "shooting-star";
+      star.style.top = Math.random() * window.innerHeight * 0.5 + "px";
+      star.style.left = window.innerWidth + "px";
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 1500);
+    }
+    setInterval(createShootingStar, 4000);
 
     // ---------- Secret Note + Confetti ----------
     function revealNote() {
@@ -282,7 +385,14 @@
     ["mouseup", "touchend"].forEach(evt => canvas.addEventListener(evt, () => isDrawing = false));
     canvas.addEventListener("mousemove", scratch);
     canvas.addEventListener("touchmove", e => { scratch(e); e.preventDefault(); }, { passive: false });
+
+    // ---------- Popup ----------
+    function openPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
   </script>
 </body>
 </html>
-
