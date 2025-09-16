@@ -5,7 +5,6 @@
   <title>Happy Birthday 🎂</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* ---------- Base Styles ---------- */
     body {
       margin: 0;
       height: 100vh;
@@ -17,32 +16,74 @@
       font-family: 'Poppins', sans-serif;
       text-align: center;
       color: #fff;
-      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-      background-size: 600% 600%;
-      animation: gradientShift 20s ease infinite;
+      background: #000;
       padding: 20px;
       box-sizing: border-box;
     }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Background Sky Gradient */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000 100%);
+      z-index: -2;
     }
 
-    /* ---------- Title & Text ---------- */
+    /* Moon */
+    .moon {
+      position: fixed;
+      top: 60px;
+      right: 60px;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, #fff, #ddd 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(255,255,255,0.6);
+      z-index: -1;
+    }
+
+    /* Twinkling Stars */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+      z-index: -1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* Shooting Stars */
+    .shooting-star {
+      position: fixed;
+      width: 2px;
+      height: 80px;
+      background: linear-gradient(white, transparent);
+      opacity: 0;
+      transform: rotate(45deg);
+      animation: shoot 3s linear forwards;
+      z-index: -1;
+    }
+    @keyframes shoot {
+      0% { opacity: 1; transform: translate(0,0) rotate(45deg); }
+      100% { opacity: 0; transform: translate(-300px,300px) rotate(45deg); }
+    }
+
+    /* Title & Text */
     .graffiti-text {
       font-size: clamp(1.8rem, 6vw, 3.5rem);
       margin: 0 0 15px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      text-shadow:
-        0 0 5px #ff0057,
-        0 0 15px #00f7ff,
-        0 0 25px #ff0057;
+      text-shadow: 0 0 5px #ff0057, 0 0 15px #00f7ff, 0 0 25px #ff0057;
       animation: graffitiGlow 4s ease-in-out infinite alternate;
     }
-
     @keyframes graffitiGlow {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -58,13 +99,12 @@
       animation: fadeInUp 2s ease-out forwards;
       max-width: 90%;
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---------- Buttons ---------- */
+    /* Buttons */
     button {
       margin: 10px 5px;
       padding: 12px 20px;
@@ -77,33 +117,12 @@
       transition: all 0.3s ease;
       z-index: 10;
     }
-
     button:hover {
       transform: scale(1.08);
       background: #ff4757;
     }
 
-    /* Circular Image Button */
-    .circle-btn {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: none;
-      background: radial-gradient(circle, #ff6b81, #ff4757);
-      color: white;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      margin-top: 15px;
-      transition: transform 0.3s ease;
-      z-index: 10;
-    }
-
-    .circle-btn:hover {
-      transform: scale(1.1);
-    }
-
-    /* ---------- Secret Note ---------- */
+    /* Secret Note */
     #secretNote {
       margin-top: 15px;
       font-size: clamp(1rem, 3.5vw, 1.2rem);
@@ -112,102 +131,7 @@
       line-height: 1.5;
     }
 
-    /* ---------- Balloons ---------- */
-    .balloon {
-      position: absolute;
-      bottom: -150px;
-      width: 45px;
-      height: 65px;
-      border-radius: 50%;
-      animation: floatUp linear infinite;
-      z-index: 5;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* ---------- Stars ---------- */
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out;
-      z-index: 0;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    /* ---------- Shooting Stars ---------- */
-    .shooting-star {
-      position: absolute;
-      top: 0;
-      width: 120px;
-      height: 2px;
-      background: linear-gradient(90deg, white, transparent);
-      opacity: 0.8;
-      transform: rotate(25deg);
-      animation: shoot 1.2s linear forwards;
-      z-index: 1;
-    }
-
-    @keyframes shoot {
-      0% {
-        transform: translateX(0) translateY(0) rotate(25deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-500px) translateY(500px) rotate(25deg);
-        opacity: 0;
-      }
-    }
-
-    /* ---------- Popup ---------- */
-    .popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    .popup-content {
-      position: relative;
-      background: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      max-width: 90%;
-      max-height: 80%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-
-    .popup-content img {
-      max-width: 100%;
-      max-height: 80vh;
-      border-radius: 10px;
-      display: block;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      cursor: pointer;
-    }
-
-    /* ---------- Scratch Card ---------- */
+    /* Scratch Card */
     #scratchCard {
       margin: 25px auto 0;
       position: relative;
@@ -218,6 +142,11 @@
       background: radial-gradient(circle at top, #1a1a2e, #0f0f1e);
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
       z-index: 5;
+      transition: box-shadow 0.5s ease, transform 0.5s ease;
+    }
+    #scratchCard.revealed {
+      box-shadow: 0 0 25px #fffa, 0 0 50px #fff5;
+      transform: scale(1.05);
     }
 
     #hiddenMsg {
@@ -250,24 +179,17 @@
       top: 0; left: 0;
       z-index: 2;
     }
-
-    /* ---------- Mobile Tweaks ---------- */
-    @media (max-width: 500px) {
-      .graffiti-text { letter-spacing: 1px; }
-      .smooth-text { margin: 5px 0 15px; }
-      button { width: 80%; max-width: 250px; }
-      #scratchCard { height: 100px; }
-    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="moon"></div>
+
   <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
   <p class="smooth-text">I hope your day goes well filled with LOTS of gifts, love, happiness, and the best you deserve :) 💖</p>
 
-  <button onclick="revealNote()">Open Message?</button>
+  <button onclick="revealNote()">🔐 Open Your Surprise 🔐</button>
   <button onclick="playSong()">🎶 Play Song 🎶</button>
-  <button class="circle-btn" onclick="openPopup()">🌸</button>
 
   <div id="secretNote">I miss you a lot, and I’m so sorry for my mistakes. I promise I’m trying to be better every day 💕</div>
 
@@ -277,19 +199,10 @@
     <canvas></canvas>
   </div>
 
-  <!-- Popup Image -->
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">&times;</span>
-      <img src="https://placekitten.com/400/300" alt="Surprise Image">
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    // ---------- Stars ----------
+    /* Stars */
     (() => {
-      const starCount = 60;
+      const starCount = 80;
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement("div");
         star.className = "star";
@@ -299,68 +212,37 @@
       }
     })();
 
-    // ---------- Balloons ----------
-    function createBalloon() {
-      const balloon = document.createElement("div");
-      balloon.className = "balloon";
-      balloon.style.left = Math.random() * window.innerWidth + "px";
-      balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
-      balloon.style.animationDuration = (7 + Math.random()*3) + "s";
-      document.body.appendChild(balloon);
-      setTimeout(() => balloon.remove(), 12000);
-    }
-    setInterval(createBalloon, 1000);
-
-    // ---------- Shooting Stars ----------
+    /* Shooting Stars */
     function createShootingStar() {
       const star = document.createElement("div");
       star.className = "shooting-star";
-      star.style.top = Math.random() * window.innerHeight * 0.5 + "px";
-      star.style.left = window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight / 2 + "px";
+      star.style.left = window.innerWidth - 100 + "px";
       document.body.appendChild(star);
-      setTimeout(() => star.remove(), 1500);
+      setTimeout(() => star.remove(), 3000);
     }
-    setInterval(createShootingStar, 4000);
+    setInterval(createShootingStar, 5000);
 
-    // ---------- Secret Note + Confetti ----------
+    /* Secret Note */
     function revealNote() {
-      const note = document.getElementById("secretNote");
-      note.style.display = "block";
-      launchConfetti();
+      document.getElementById("secretNote").style.display = "block";
     }
 
-    function launchConfetti() {
-      const duration = 2500;
-      const end = Date.now() + duration;
-      const defaults = { startVelocity: 25, spread: 360, ticks: 60, zIndex: 1000 };
-
-      const interval = setInterval(() => {
-        const timeLeft = end - Date.now();
-        if (timeLeft <= 0) return clearInterval(interval);
-
-        confetti({
-          ...defaults,
-          particleCount: 30 * (timeLeft / duration),
-          origin: { x: Math.random(), y: Math.random() - 0.2 }
-        });
-      }, 250);
-    }
-
-    // ---------- Audio ----------
+    /* Audio */
     const audio = new Audio("https://www.dropbox.com/scl/fi/sj5mgh3orewaxgj35horb/One-Direction-Night-Changes.mp3?rlkey=bhdy84exjfb72zidip32b6ck7&dl=1");
     audio.preload = "auto";
     function playSong() {
       audio.play().catch(() => alert("Tap again to start the song 🎶"));
     }
 
-    // ---------- Scratch Card ----------
+    /* Scratch Card */
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
     const scratchCard = document.getElementById("scratchCard");
 
     canvas.width = scratchCard.offsetWidth;
     canvas.height = scratchCard.offsetHeight;
-    ctx.fillStyle = "#999";
+    ctx.fillStyle = "#888";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     let isDrawing = false;
@@ -379,6 +261,7 @@
       ctx.arc(pos.x, pos.y, 18, 0, Math.PI*2);
       ctx.fill();
       document.getElementById("openText").style.display = "none";
+      checkScratchCompletion();
     }
 
     ["mousedown", "touchstart"].forEach(evt => canvas.addEventListener(evt, e => { isDrawing = true; scratch(e); }));
@@ -386,12 +269,17 @@
     canvas.addEventListener("mousemove", scratch);
     canvas.addEventListener("touchmove", e => { scratch(e); e.preventDefault(); }, { passive: false });
 
-    // ---------- Popup ----------
-    function openPopup() {
-      document.getElementById("popup").style.display = "flex";
-    }
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
+    /* Scratch Completion Effect */
+    function checkScratchCompletion() {
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let cleared = 0;
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) cleared++;
+      }
+      const percent = cleared / (canvas.width * canvas.height) * 100;
+      if (percent > 70) {
+        scratchCard.classList.add("revealed");
+      }
     }
   </script>
 </body>
