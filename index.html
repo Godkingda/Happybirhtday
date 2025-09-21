@@ -27,7 +27,61 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000 100%);
+      z-index: -3;
+    }
+
+    /* Aurora Layer */
+    .aurora {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       z-index: -2;
+      pointer-events: none;
+    }
+
+    .aurora span {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(0, 255, 180, 0.2), transparent 70%);
+      animation: auroraMove 12s ease-in-out infinite;
+      filter: blur(80px);
+      transform: scale(1.5);
+    }
+
+    .aurora span:nth-child(1) {
+      background: radial-gradient(ellipse at center, rgba(0, 255, 180, 0.25), transparent 70%);
+      top: -20%;
+      left: -20%;
+      animation-delay: 0s;
+    }
+
+    .aurora span:nth-child(2) {
+      background: radial-gradient(ellipse at center, rgba(0, 150, 255, 0.2), transparent 70%);
+      top: -30%;
+      right: -15%;
+      animation-delay: 4s;
+    }
+
+    .aurora span:nth-child(3) {
+      background: radial-gradient(ellipse at center, rgba(255, 100, 255, 0.15), transparent 70%);
+      bottom: -25%;
+      left: -10%;
+      animation-delay: 8s;
+    }
+
+    @keyframes auroraMove {
+      0%, 100% {
+        transform: translateY(0) scale(1.5) rotate(0deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translateY(-10%) scale(1.6) rotate(5deg);
+        opacity: 1;
+      }
     }
 
     .moon {
@@ -265,6 +319,13 @@
 <body>
   <div class="moon"></div>
 
+  <!-- Aurora Layer -->
+  <div class="aurora">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
   <h1 class="graffiti-text">🎂 Happy Birthday, Akshita 🎂</h1>
   <p class="smooth-text">I hope your day goes well filled with LOTS of gifts, love, happiness, and the best you deserve :) 💖</p>
 
@@ -274,7 +335,7 @@
   <div id="secretNote">I miss you a lot, and I’m so sorry for my mistakes. I promise I’m trying to be better every day 💕</div>
 
   <div id="scratchCard">
-    <div id="hiddenMsg">💌 You’ll always be my favourite person 💌</div>
+    <div id="hiddenMsg">💌 You’ll always be my favourite person,I rly love you ;-; 💌</div>
     <div id="openText">✨ Scratch Me ✨</div>
     <canvas></canvas>
   </div>
